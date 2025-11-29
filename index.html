@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sampler</title>
+
+	<style>
+		body {
+			margin: 0;
+			background: #000;
+
+			overflow: hidden;
+		}
+		#controller {
+			#grid {
+				display: grid;
+				gap: 1vw;
+
+				.row {
+					display: flex;
+					gap: 1vw;
+				}
+				.pad {
+					width: 49.5vw;
+					height: 49.5vw;
+					background: #222223;
+				}
+			}
+		}
+
+		#load {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+
+			background: #000;
+			z-index: 100;
+			
+			&hidden {
+				display: none;
+			}
+			p {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+
+				color: #fff;
+			}
+		}
+		
+		dialog {
+			position: absolute;
+			top: 0;
+			left: 0;
+
+			width: 100vw;
+			height: 100vh;
+
+			background: #00000177;
+		}
+		dialog .modal {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+
+			width: 70vw;
+			height: max-content;
+			max-height: 80vh;
+			box-sizing: border-box;
+
+			padding: 2vw;
+			background: #000;
+			border-radius: 1vw;
+
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			h1, p {
+				color: #fff;
+				font-family: Arial;
+			}
+			h1 {
+				margin: 2vw 0;
+				font-size: 3vw;
+			}
+			p {
+				margin: 1vw 0;
+				font-size: 1.5vw;
+			}
+			#waveform {
+				width: 80%;
+				margin: 1.5vw 0;
+
+				::part(region) {
+					color: #fff;
+				}
+			}
+		}
+
+		input[type="range"] {
+			background: transparent;
+		}
+		input[type="range"]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			background-color: #000;
+			border: none;
+			border-radius: 50%;
+			width: 2vh;
+			height: 2vh;
+			margin-top: -.5vh;
+		}
+		input[type="range"]::-moz-range-thumb {
+			border: none;
+			border-radius: 50%;
+			background-color: #000;
+			width: 2vh;
+			height: 2vh;
+		}
+
+		input[type="range"]::-webkit-slider-runnable-track, input[type="range"]::-moz-range-track {
+			border-radius: 1.5vh;
+			height: 1.5vh;
+			border: 2px solid #000;
+
+			background: linear-gradient(to right, rgb(255, 185, 125), rgb(255, 255, 255), rgb(135, 200, 255)) !important;
+		}
+
+		#slider {
+			grid-area: 3 / 1 / 4 / 4;
+			appearance: none;
+			-webkit-appearance: none;
+			background: transparent;
+			cursor: pointer;
+			width: 90%;
+			position: relative;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			--fill: 0%;
+		}
+		#slider::-webkit-slider-runnable-track {
+			background: linear-gradient(to right, #777 var(--fill), var(--glass-bg) var(--fill)) !important;
+			border-radius: calc(1 * var(--u));
+			height: calc(1 * var(--u));
+		}
+		#slider::-moz-range-track {
+			background: linear-gradient(to right, #777 var(--fill), var(--glass-bg) var(--fill)) !important;
+			border-radius: calc(1 * var(--u));
+			height: calc(1 * var(--u));
+		}
+		#slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			background-color: #ccc;
+			border: none;
+			border-radius: 50%;
+			width: calc(2 * var(--u));
+			height: calc(2 * var(--u));
+			margin-top: calc(-.5 * var(--u));
+		}
+		#slider::-moz-range-thumb {
+			border: none;
+			border-radius: 50%;
+			background-color: #ccc;
+			width: calc(2 * var(--u));
+			height: calc(2 * var(--u));
+		}
+	</style>
+</head>
+<body>
+	<div id="controller">
+		<!-- <div id="top">
+			<div class=""></div>
+		</div>
+		<div id="side">
+			<div class=""></div>
+		</div> -->
+		<div id="grid">
+			<div class="row">
+				<div class="pad" id="pad81"></div>
+				<div class="pad" id="pad82"></div>
+				<div class="pad" id="pad83"></div>
+				<div class="pad" id="pad84"></div>
+				<div class="pad" id="pad85"></div>
+				<div class="pad" id="pad86"></div>
+				<div class="pad" id="pad87"></div>
+				<div class="pad" id="pad88"></div>
+			</div>
+			<div class="row">
+				<div class="pad" id="pad71"></div>
+				<div class="pad" id="pad72"></div>
+				<div class="pad" id="pad73"></div>
+				<div class="pad" id="pad74"></div>
+				<div class="pad" id="pad75"></div>
+				<div class="pad" id="pad76"></div>
+				<div class="pad" id="pad77"></div>
+				<div class="pad" id="pad78"></div>
+			</div>
+			<div class="row">
+				<div class="pad" id="pad61"></div>
+				<div class="pad" id="pad62"></div>
+				<div class="pad" id="pad63"></div>
+				<div class="pad" id="pad64"></div>
+				<div class="pad" id="pad65"></div>
+				<div class="pad" id="pad66"></div>
+				<div class="pad" id="pad67"></div>
+				<div class="pad" id="pad68"></div>
+			</div>
+			<div class="row">
+				<div class="pad" id="pad51"></div>
+				<div class="pad" id="pad52"></div>
+				<div class="pad" id="pad53"></div>
+				<div class="pad" id="pad54"></div>
+				<div class="pad" id="pad55"></div>
+				<div class="pad" id="pad56"></div>
+				<div class="pad" id="pad57"></div>
+				<div class="pad" id="pad58"></div>
+			</div>
+			<div class="row">
+				<div class="pad" id="pad41"></div>
+				<div class="pad" id="pad42"></div>
+				<div class="pad" id="pad43"></div>
+				<div class="pad" id="pad44"></div>
+				<div class="pad" id="pad45"></div>
+				<div class="pad" id="pad46"></div>
+				<div class="pad" id="pad47"></div>
+				<div class="pad" id="pad48"></div>
+			</div>
+			<div class="row">
+				<div class="pad" id="pad31"></div>
+				<div class="pad" id="pad32"></div>
+				<div class="pad" id="pad33"></div>
+				<div class="pad" id="pad34"></div>
+				<div class="pad" id="pad35"></div>
+				<div class="pad" id="pad36"></div>
+				<div class="pad" id="pad37"></div>
+				<div class="pad" id="pad38"></div>
+			</div>
+			<div class="row">
+				<div class="pad" id="pad21"></div>
+				<div class="pad" id="pad22"></div>
+				<div class="pad" id="pad23"></div>
+				<div class="pad" id="pad24"></div>
+				<div class="pad" id="pad25"></div>
+				<div class="pad" id="pad26"></div>
+				<div class="pad" id="pad27"></div>
+				<div class="pad" id="pad28"></div>
+			</div>
+			<div class="row">
+				<div class="pad" id="pad11"></div>
+				<div class="pad" id="pad12"></div>
+				<div class="pad" id="pad13"></div>
+				<div class="pad" id="pad14"></div>
+				<div class="pad" id="pad15"></div>
+				<div class="pad" id="pad16"></div>
+				<div class="pad" id="pad17"></div>
+				<div class="pad" id="pad18"></div>
+			</div>
+		</div>
+	</div>
+
+	<div id="load" onclick="start()">
+		<p>Click</p>
+	</div>
+
+	<dialog id="edit-pad-modal">
+		<div class="modal">
+			<h1>Edit Pad</h1>
+
+			<div id="waveform"></div>
+			<input id="zoom-slider" type="range" min="0" max="2000" value="0" />
+		</div>
+	</dialog>
+
+	<script src="https://unpkg.com/wavesurfer.js@7"></script>
+	<script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/regions.min.js"></script>
+	<script>
+		const samples = {};
+		async function start() {
+			document.getElementById('load').hidden = true;
+			samples.amen = await loadAudio('amen.mp3');
+
+			editPad('81')
+		}
+
+		function editPad(padId) {
+			const regions = WaveSurfer.Regions.create();
+			const ws = WaveSurfer.create({
+				container: document.getElementById('waveform'),
+				waveColor: '#aaa',
+				progressColor: '#fff',
+				normalize: true,
+				url: '/amen.mp3',
+				plugins: [regions],
+			});
+
+			ws.on('decode', () => {
+				regions.addRegion({
+					start: 0,
+					end: ws.getDuration(),
+					content: 'Selection',
+					color: '#60f5',
+				})
+				document.getElementById('zoom-slider').addEventListener('input', (e) => {
+					ws.zoom(e.target.valueAsNumber);
+				})
+			});
+
+			regions.on('region-clicked', (region, e) => {
+				e.stopPropagation();
+				ws.play(region.start, region.end);
+			})
+
+			document.getElementById('edit-pad-modal').showModal();
+		}
+
+
+		const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+		async function loadAudio(url) {
+			const resp = await fetch(url);
+			const buffer = await resp.arrayBuffer();
+			return await audioCtx.decodeAudioData(buffer);
+		}
+		function playSnippet(buffer, offset = 0, duration = undefined) {
+			const src = audioCtx.createBufferSource();
+			src.buffer = buffer;
+			src.connect(audioCtx.destination);
+			src.start(0, offset, duration);
+		}
+
+		document.getElementById('pad81').addEventListener('click', () => {
+			playSnippet(samples.amen, 1.8, .15);
+		});
+		document.getElementById('pad82').addEventListener('click', () => {
+			playSnippet(samples.amen, 2.25, .2);
+		});
+
+		// document.getElementById('load').hidden = true;
+		
+	</script>
+
+</body>
+</html>
