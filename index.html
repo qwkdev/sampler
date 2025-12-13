@@ -6,9 +6,24 @@
 	<title>Sampler</title>
 
 	<style>
+		:root {
+			--bg: #000;
+			--shadow: #00000177;
+			--fg: #222223;
+			--fg2: #333334;
+			--fg3: #555556;
+			--fg4: #777778;
+			--text: #fff;
+			--selection: #fff7;
+			--brand: #30f;
+			--brandt: #60f5;
+
+			--u: 1.2vw;
+		}
+
 		body {
 			margin: 0;
-			background: #000;
+			background: var(--bg);
 
 			overflow: hidden;
 		}
@@ -24,7 +39,7 @@
 				.pad {
 					width: 49.5vw;
 					height: 49.5vw;
-					background: #222223;
+					background: var(--fg);
 				}
 			}
 		}
@@ -36,7 +51,7 @@
 			width: 100%;
 			height: 100%;
 
-			background: #000;
+			background: var(--bg);
 			z-index: 100;
 			
 			&hidden {
@@ -48,7 +63,7 @@
 				left: 50%;
 				transform: translate(-50%, -50%);
 
-				color: #fff;
+				color: var(--text);
 			}
 		}
 		
@@ -60,7 +75,7 @@
 			width: 100vw;
 			height: 100vh;
 
-			background: #00000177;
+			background: var(--shadow);
 		}
 		dialog .modal {
 			position: absolute;
@@ -68,109 +83,64 @@
 			left: 50%;
 			transform: translate(-50%, -50%);
 
-			width: 70vw;
+			width: calc(60 * var(--u));
 			height: max-content;
 			max-height: 80vh;
 			box-sizing: border-box;
 
-			padding: 2vw;
-			background: #000;
-			border-radius: 1vw;
+			padding: calc(1.5 * var(--u));
+			background: var(--bg);
+			border-radius: calc(1 * var(--u));
 
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 
 			h1, p {
-				color: #fff;
+				color: var(--text);
 				font-family: Arial;
 			}
 			h1 {
-				margin: 2vw 0;
-				font-size: 3vw;
+				margin: calc(1 * var(--u)) 0;
+				font-size: calc(2.5 * var(--u));
 			}
 			p {
-				margin: 1vw 0;
-				font-size: 1.5vw;
+				margin: calc(1 * var(--u)) 0;
+				font-size: calc(1 * var(--u));
 			}
 			#waveform {
 				width: 80%;
-				margin: 1.5vw 0;
+				margin: calc(1.5 * var(--u)) 0;
 
 				::part(region) {
-					color: #fff;
+					color: var(--text);
 				}
 			}
 		}
 
-		input[type="range"] {
-			background: transparent;
-		}
-		input[type="range"]::-webkit-slider-thumb {
-			-webkit-appearance: none;
-			appearance: none;
-			background-color: #000;
-			border: none;
-			border-radius: 50%;
-			width: 2vh;
-			height: 2vh;
-			margin-top: -.5vh;
-		}
-		input[type="range"]::-moz-range-thumb {
-			border: none;
-			border-radius: 50%;
-			background-color: #000;
-			width: 2vh;
-			height: 2vh;
-		}
-
-		input[type="range"]::-webkit-slider-runnable-track, input[type="range"]::-moz-range-track {
-			border-radius: 1.5vh;
-			height: 1.5vh;
-			border: 2px solid #000;
-
-			background: linear-gradient(to right, rgb(255, 185, 125), rgb(255, 255, 255), rgb(135, 200, 255)) !important;
-		}
-
-		#slider {
-			grid-area: 3 / 1 / 4 / 4;
+		#zoom-slider {
 			appearance: none;
 			-webkit-appearance: none;
 			background: transparent;
 			cursor: pointer;
-			width: 90%;
-			position: relative;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
+			width: 80%;
 			--fill: 0%;
-		}
-		#slider::-webkit-slider-runnable-track {
-			background: linear-gradient(to right, #777 var(--fill), var(--glass-bg) var(--fill)) !important;
-			border-radius: calc(1 * var(--u));
-			height: calc(1 * var(--u));
-		}
-		#slider::-moz-range-track {
-			background: linear-gradient(to right, #777 var(--fill), var(--glass-bg) var(--fill)) !important;
-			border-radius: calc(1 * var(--u));
-			height: calc(1 * var(--u));
-		}
-		#slider::-webkit-slider-thumb {
-			-webkit-appearance: none;
-			appearance: none;
-			background-color: #ccc;
-			border: none;
-			border-radius: 50%;
-			width: calc(2 * var(--u));
-			height: calc(2 * var(--u));
-			margin-top: calc(-.5 * var(--u));
-		}
-		#slider::-moz-range-thumb {
-			border: none;
-			border-radius: 50%;
-			background-color: #ccc;
-			width: calc(2 * var(--u));
-			height: calc(2 * var(--u));
+
+			&::-webkit-slider-runnable-track, &::-moz-range-track {
+				background: linear-gradient(to right, var(--fg4) var(--fill), var(--fg2) var(--fill)) !important;
+				border-radius: calc(1 * var(--u));
+				height: calc(1 * var(--u));
+			}
+			&::-moz-range-thumb {
+				border: none;
+				border-radius: 50%;
+				background-color: var(--text);
+				width: calc(2 * var(--u));
+				height: calc(2 * var(--u));
+			}
+			&:focus {
+				outline: none;
+			}
 		}
 	</style>
 </head>
@@ -300,6 +270,7 @@
 				url: '/amen.mp3',
 				plugins: [regions],
 			});
+			const zoomSlider = document.getElementById('zoom-slider');
 
 			ws.on('decode', () => {
 				regions.addRegion({
@@ -308,8 +279,9 @@
 					content: 'Selection',
 					color: '#60f5',
 				})
-				document.getElementById('zoom-slider').addEventListener('input', (e) => {
-					ws.zoom(e.target.valueAsNumber);
+				zoomSlider.addEventListener('input', e => {
+					ws.zoom(zoomSlider.valueAsNumber);
+					zoomSlider.style.setProperty('--fill', `${zoomSlider.valueAsNumber / parseFloat(zoomSlider.max) * 100}%`)
 				})
 			});
 
@@ -318,6 +290,8 @@
 				ws.play(region.start, region.end);
 			})
 
+			//! zoomSlider.value = ws.
+			zoomSlider.style.setProperty('--fill', `${zoomSlider.valueAsNumber / parseFloat(zoomSlider.max) * 100}%`)
 			document.getElementById('edit-pad-modal').showModal();
 		}
 
