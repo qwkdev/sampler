@@ -67,6 +67,15 @@
 			}
 		}
 		
+		input[type='number'] {
+			-moz-appearance: textfield;
+			appearance: textfield;
+		}
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+		}
+
 		dialog {
 			position: absolute;
 			top: 0;
@@ -114,6 +123,61 @@
 
 				::part(region) {
 					color: var(--text);
+				}
+			}
+
+			#clr-picker {
+				display: flex;
+				margin-top: calc(1.5 * var(--u));
+
+				#presets {
+					display: grid;
+					grid-template-columns: repeat(16, calc(2 * var(--u)));
+
+					.colour {
+						background: var(--clr);
+
+						border: none;
+						width: 100%;
+						aspect-ratio: 1/1;
+					}
+				}
+				#chosen {
+					width: calc(12 * var(--u));
+					height: calc(12 * var(--u));
+					margin: calc(2 * var(--u));
+					background: var(--clr);
+					border-radius: calc(.5 * var(--u));
+				}
+			}
+			#rgb {
+				display: flex;
+				gap: calc(1 * var(--u));
+				margin-top: calc(1.5 * var(--u));
+				justify-content: center;
+
+				input, #clr-set {
+					width: calc(8 * var(--u));
+					font-size: calc(2 * var(--u));
+					border-radius: calc(.5 * var(--u));
+					text-align: center;
+
+					background: var(--fg);
+					border: 1px solid var(--fg3);
+					color: var(--text);
+
+					&:focus {
+						outline: none;
+						border-color: var(--brand);
+					}
+					&::selection {
+						background: var(--selection);
+					}
+				}
+				#clr-set {
+					cursor: pointer;
+					border-color: var(--brand);
+					background: var(--brand);
 				}
 			}
 		}
@@ -246,6 +310,148 @@
 
 			<div id="waveform"></div>
 			<input id="zoom-slider" type="range" min="0" max="2000" value="0" />
+		
+			<div id="pad-clr" data-id="" data-rgb="">
+				<div id="clr-picker">
+					<div id="presets">
+		<button class="colour" data-value="121" style="--clr: #aa6161"></button>
+		<button class="colour" data-value="60" style="--clr: #ff7661"></button>
+		<button class="colour" data-value="9" style="--clr: #ffb361"></button>
+		<button class="colour" data-value="12" style="--clr: #ffeea1"></button>
+		<button class="colour" data-value="13" style="--clr: #ffff61"></button>
+		<button class="colour" data-value="16" style="--clr: #ddffa1"></button>
+		<button class="colour" data-value="76" style="--clr: #76dd61"></button>
+		<button class="colour" data-value="26" style="--clr: #61dd76"></button>
+		<button class="colour" data-value="29" style="--clr: #61ffcc"></button>
+		<button class="colour" data-value="38" style="--clr: #61c7dd"></button>
+		<button class="colour" data-value="104" style="--clr: #818ccc"></button>
+		<button class="colour" data-value="80" style="--clr: #8c61ff"></button>
+		<button class="colour" data-value="52" style="--clr: #ffb3ff"></button>
+		<button class="colour" data-value="0" style="--clr: #616161"></button>
+		<button class="colour" data-value="24" style="--clr: #c2ffc2"></button>
+		<button class="colour" data-value="40" style="--clr: #c2ddff"></button>
+		<button class="colour" data-value="7" style="--clr: #b36161"></button>
+		<button class="colour" data-value="107" style="--clr: #f9b3a1"></button>
+		<button class="colour" data-value="105" style="--clr: #ccaa81"></button>
+		<button class="colour" data-value="99" style="--clr: #ddcc61"></button>
+		<button class="colour" data-value="74" style="--clr: #eefc61"></button>
+		<button class="colour" data-value="17" style="--clr: #c2ff61"></button>
+		<button class="colour" data-value="23" style="--clr: #61b361"></button>
+		<button class="colour" data-value="101" style="--clr: #61ba76"></button>
+		<button class="colour" data-value="29" style="--clr: #61ffcc"></button>
+		<button class="colour" data-value="39" style="--clr: #61a1b3"></button>
+		<button class="colour" data-value="47" style="--clr: #6161b3"></button>
+		<button class="colour" data-value="69" style="--clr: #8c61f3"></button>
+		<button class="colour" data-value="53" style="--clr: #ff61ff"></button>
+		<button class="colour" data-value="1" style="--clr: #b3b3b3"></button>
+		<button class="colour" data-value="28" style="--clr: #c2ffcc"></button>
+		<button class="colour" data-value="103" style="--clr: #8181a1"></button>
+		<button class="colour" data-value="6" style="--clr: #dd6161"></button>
+		<button class="colour" data-value="11" style="--clr: #b37661"></button>
+		<button class="colour" data-value="61" style="--clr: #e9b361"></button>
+		<button class="colour" data-value="109" style="--clr: #fff38c"></button>
+		<button class="colour" data-value="73" style="--clr: #f3ffa1"></button>
+		<button class="colour" data-value="86" style="--clr: #d5ff8c"></button>
+		<button class="colour" data-value="23" style="--clr: #61b361"></button>
+		<button class="colour" data-value="102" style="--clr: #76c28c"></button>
+		<button class="colour" data-value="34" style="--clr: #61ddc2"></button>
+		<button class="colour" data-value="41" style="--clr: #61c7ff"></button>
+		<button class="colour" data-value="46" style="--clr: #6161dd"></button>
+		<button class="colour" data-value="48" style="--clr: #ccb3ff"></button>
+		<button class="colour" data-value="82" style="--clr: #ee8cdd"></button>
+		<button class="colour" data-value="2" style="--clr: #dddddd"></button>
+		<button class="colour" data-value="89" style="--clr: #ccfcd5"></button>
+		<button class="colour" data-value="103" style="--clr: #8181a1"></button>
+		<button class="colour" data-value="6" style="--clr: #dd6161"></button>
+		<button class="colour" data-value="127" style="--clr: #c27661"></button>
+		<button class="colour" data-value="96" style="--clr: #ffc261"></button>
+		<button class="colour" data-value="97" style="--clr: #f3ee61"></button>
+		<button class="colour" data-value="85" style="--clr: #ddf961"></button>
+		<button class="colour" data-value="18" style="--clr: #a1dd61"></button>
+		<button class="colour" data-value="23" style="--clr: #61b361"></button>
+		<button class="colour" data-value="25" style="--clr: #61ff8c"></button>
+		<button class="colour" data-value="33" style="--clr: #61ffe9"></button>
+		<button class="colour" data-value="42" style="--clr: #61a1dd"></button>
+		<button class="colour" data-value="45" style="--clr: #6161ff"></button>
+		<button class="colour" data-value="49" style="--clr: #a161ff"></button>
+		<button class="colour" data-value="95" style="--clr: #ff61cc"></button>
+		<button class="colour" data-value="3" style="--clr: #ffffff"></button>
+		<button class="colour" data-value="114" style="--clr: #ddfce4"></button>
+		<button class="colour" data-value="115" style="--clr: #e9e9ff"></button>
+		<button class="colour" data-value="120" style="--clr: #e96161"></button>
+		<button class="colour" data-value="83" style="--clr: #a17661"></button>
+		<button class="colour" data-value="126" style="--clr: #eec261"></button>
+		<button class="colour" data-value="97" style="--clr: #f3ee61"></button>
+		<button class="colour" data-value="110" style="--clr: #e9f9a1"></button>
+		<button class="colour" data-value="19" style="--clr: #81b361"></button>
+		<button class="colour" data-value="22" style="--clr: #61dd61"></button>
+		<button class="colour" data-value="31" style="--clr: #61b381"></button>
+		<button class="colour" data-value="90" style="--clr: #b3fff6"></button>
+		<button class="colour" data-value="43" style="--clr: #6181b3"></button>
+		<button class="colour" data-value="45" style="--clr: #6161ff"></button>
+		<button class="colour" data-value="81" style="--clr: #cc61fc"></button>
+		<button class="colour" data-value="57" style="--clr: #ff61c2"></button>
+		<button class="colour" data-value="1" style="--clr: #b3b3b3"></button>
+		<button class="colour" data-value="32" style="--clr: #c2fff3"></button>
+		<button class="colour" data-value="93" style="--clr: #d5c2f9"></button>
+		<button class="colour" data-value="4" style="--clr: #ffb3b3"></button>
+		<button class="colour" data-value="10" style="--clr: #dd8c61"></button>
+		<button class="colour" data-value="100" style="--clr: #b3a161"></button>
+		<button class="colour" data-value="63" style="--clr: #a1a161"></button>
+		<button class="colour" data-value="98" style="--clr: #e4ff61"></button>
+		<button class="colour" data-value="122" style="--clr: #81f661"></button>
+		<button class="colour" data-value="21" style="--clr: #61ff61"></button>
+		<button class="colour" data-value="65" style="--clr: #61b38c"></button>
+		<button class="colour" data-value="68" style="--clr: #61b3b3"></button>
+		<button class="colour" data-value="92" style="--clr: #a1c2f6"></button>
+		<button class="colour" data-value="44" style="--clr: #a18cff"></button>
+		<button class="colour" data-value="94" style="--clr: #f98cff"></button>
+		<button class="colour" data-value="59" style="--clr: #b3618c"></button>
+		<button class="colour" data-value="118" style="--clr: #d5d5d5"></button>
+		<button class="colour" data-value="119" style="--clr: #f9ffff"></button>
+		<button class="colour" data-value="116" style="--clr: #e4d5ff"></button>
+		<button class="colour" data-value="5" style="--clr: #ff6161"></button>
+		<button class="colour" data-value="84" style="--clr: #ffa161"></button>
+		<button class="colour" data-value="100" style="--clr: #b3a161"></button>
+		<button class="colour" data-value="15" style="--clr: #b3b361"></button>
+		<button class="colour" data-value="111" style="--clr: #d5ee76"></button>
+		<button class="colour" data-value="20" style="--clr: #c2ffb3"></button>
+		<button class="colour" data-value="21" style="--clr: #61ff61"></button>
+		<button class="colour" data-value="30" style="--clr: #61dda1"></button>
+		<button class="colour" data-value="37" style="--clr: #61eeff"></button>
+		<button class="colour" data-value="79" style="--clr: #61a1ff"></button>
+		<button class="colour" data-value="51" style="--clr: #7661b3"></button>
+		<button class="colour" data-value="55" style="--clr: #b361b3"></button>
+		<button class="colour" data-value="58" style="--clr: #dd61a1"></button>
+		<button class="colour" data-value="8" style="--clr: #fff3d5"></button>
+		<button class="colour" data-value="36" style="--clr: #c2f3ff"></button>
+		<button class="colour" data-value="70" style="--clr: #ccb3c2"></button>
+		<button class="colour" data-value="5" style="--clr: #ff6161"></button>
+		<button class="colour" data-value="108" style="--clr: #f9ba76"></button>
+		<button class="colour" data-value="62" style="--clr: #ddc261"></button>
+		<button class="colour" data-value="14" style="--clr: #dddd61"></button>
+		<button class="colour" data-value="75" style="--clr: #ccff61"></button>
+		<button class="colour" data-value="88" style="--clr: #b3ffa1"></button>
+		<button class="colour" data-value="27" style="--clr: #61b36b"></button>
+		<button class="colour" data-value="35" style="--clr: #61b396"></button>
+		<button class="colour" data-value="78" style="--clr: #61e9ff"></button>
+		<button class="colour" data-value="66" style="--clr: #618cd5"></button>
+		<button class="colour" data-value="50" style="--clr: #8161dd"></button>
+		<button class="colour" data-value="54" style="--clr: #dd61dd"></button>
+		<button class="colour" data-value="56" style="--clr: #ffb3d5"></button>
+		<button class="colour" data-value="113" style="--clr: #f9f9d5"></button>
+		<button class="colour" data-value="91" style="--clr: #cce4ff"></button>
+		<button class="colour" data-value="71" style="--clr: #8c7681"></button>
+					</div>
+					<div id="chosen" style="--clr: #6400ff"></div>
+				</div>
+				<div id="rgb">
+					<input type="number" min="0" max="255" id="clr-r">
+					<input type="number" min="0" max="255" id="clr-g">
+					<input type="number" min="0" max="255" id="clr-b">
+					<button id="clr-set">Set</button>
+				</div>
+			</div>
 		</div>
 	</dialog>
 
