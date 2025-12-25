@@ -157,6 +157,7 @@
 				justify-content: center;
 
 				input, #clr-set {
+					font-family: Arial;
 					width: calc(8 * var(--u));
 					font-size: calc(2 * var(--u));
 					border-radius: calc(.5 * var(--u));
@@ -179,6 +180,28 @@
 					border-color: var(--brand);
 					background: var(--brand);
 				}
+			}
+
+			#save-pad {
+				margin: calc(2 * var(--u)) 0;
+				padding: calc(1 * var(--u)) calc(2 * var(--u));
+				font-size: calc(2.5 * var(--u));
+				border-radius: calc(.5 * var(--u));
+				text-align: center;
+				
+				background: var(--brand);
+				border: 1px solid var(--brand);
+				color: var(--text);
+				font-family: Arial;
+				
+				&:focus {
+					outline: none;
+				}
+				&::selection {
+					background: var(--selection);
+				}
+
+				cursor: pointer;
 			}
 		}
 
@@ -452,6 +475,8 @@
 					<button id="clr-set">Set</button>
 				</div>
 			</div>
+
+			<button id="save-pad">Save</button>
 		</div>
 	</dialog>
 
