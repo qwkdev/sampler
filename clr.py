@@ -165,6 +165,14 @@ def out(clr):
 # for clr in s:
 # 	print(out(clr))
 
+r = [[] for _ in range(8)]
+for n, c in enumerate(data):
+	r[(n%8)%8].append(c)
+for i in r:
+	for j in i:
+		print(out(j))
+exit()
+
 
 BANDS = 128
 cols = [[] for _ in range(BANDS)]
