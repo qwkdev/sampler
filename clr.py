@@ -167,7 +167,7 @@ def out(clr):
 
 r = [[] for _ in range(8)]
 for n, c in enumerate(data):
-	r[(n%8)%8].append(c)
+	r[(n%4)+(4*(n//64))].append(c)
 for i in r:
 	for j in i:
 		print(out(j))
